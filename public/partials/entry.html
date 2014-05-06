@@ -1,0 +1,52 @@
+<h1> {{entry.timestamp | date:'MMM dd, yyyy'}} </h1>
+
+<form role="form">
+  <div class="form-group">
+    <label for="grateful1">Grateful 1</label>
+    <textarea class="form-control" id="grateful1" ng-model="entry.grateful1" placeholder="I'm grateful that..."> </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="grateful1">Grateful 2</label>
+    <textarea class="form-control" id="grateful2" ng-model="entry.grateful2" placeholder="I'm grateful that..."> </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="grateful1">Grateful 3</label>
+    <textarea class="form-control" id="grateful3" ng-model="entry.grateful3" placeholder="I'm grateful that..."> </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="journal">Journal</label>
+    <textarea class="form-control" id="journal" ng-model="entry.journal" rows="15"> </textarea>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="entry.isExercise"> Exercise
+    </label>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="entry.isMeditate"> Meditate
+    </label>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="entry.isRAK"> Random Act of Kindness
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label for="journal">Mood Of Day</label>
+      <input type="number" class="form-control" ng-model="entry.moodOfDay">
+  </div>
+  <div ng-repeat="imageSrc in entry.images"> 
+    <img ng-src="{{imageSrc}}" width="250px" height="400px"> </img>
+  </div>
+
+  <button ng-click="save()" class="btn btn-default">Save</button>
+</form>
+

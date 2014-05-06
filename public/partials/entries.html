@@ -1,0 +1,6 @@
+<h1> Entries.html </h1>
+
+<div ng-repeat="entry in entries">
+  <a href="/#/entry/{{entry._id}}"> {{entry.timestamp | date:'MMM dd, yyyy'}} </a>
+  <div style="padding-left: 10px"> {{entry.journal}} </div>
+</div>

@@ -8,6 +8,8 @@ var EntrySchema = new Schema({
   grateful2: {type: String, default: ""},
   grateful3: {type: String, default: ""},
 
+  journal: String,
+
   images: [String],
 
   isExercise: {type: Boolean, default: false},
@@ -17,7 +19,7 @@ var EntrySchema = new Schema({
   moodOfDay: {type: Number, default: 5, min: 0, max: 10},
 
   // This needs to be removed
-  user: String
+  user: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 exports.schema = EntrySchema

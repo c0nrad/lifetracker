@@ -11,7 +11,16 @@
     "express-session": "*",
     "morgan": "*",
     "mongoose": "*",
-    "baucis": "*"
+    "baucis": "*",
+    "node-snapchat": "nykac/node-snapchat",
+    "async": "*",
+    "cron":"*",
+    "passport": "*",
+    "passport-google": "*",
+    "body-parser": "*",
+    "winston": "*",
+
+    "connect-mongo": "*"
   },
   "author": "sclarsen@mtu.edu"
 }

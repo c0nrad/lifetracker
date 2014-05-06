@@ -1,0 +1,38 @@
+<h1> {{me.name}} </h1>
+<p> {{me.email}} </p>
+
+<form role="form">
+  <div class="form-group">
+    <label for="snapchat">Snapchat Account:</label>
+    <input class="form-control" id="snapchat" ng-model="me.snapchat" placeholder="Snapchat Account"> </input>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="me.emailNotification"> Recieve Email Notifications?
+    </label>
+  </div>    
+
+  <div class="form-group">
+    <label for="emailTime">Email Notification Time</label> 
+    <timepicker id="emailTime" ng-model="me.emailTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="me.smsNotification"> Recieve SMS Notifications?
+    </label>
+  </div>    
+
+  <div class="form-group">
+    <label for="phone">Phone Number:</label>
+    <input type="tel" class="form-control" id="phone" ng-model="me.phone" placeholder=""> </input>
+  </div>
+
+  <div class="form-group">
+    <label for="smsTime">SMS Notification Time</label> 
+    <timepicker id="smsTime" ng-model="me.smsTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  </div>
+
+  <button ng-click="save()" class="btn btn-default">Save</button>
+</form>
