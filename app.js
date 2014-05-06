@@ -4,34 +4,29 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
+var cookieParser = require('cookie-parser')
+var session      = require('express-session')
+var morgan       = require('morgan')
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-
+var baucis = require('baucis');
 var app = express();
+
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/lifetracker')
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
+app.use(morgan('dev'))
+app.use(cookieParser()) // required before session.
+app.use(session({ secret: 'keyboard cat', key: 'sid', cookie: { secure: true }}))
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
-
-app.get('/', routes.index);
-app.get('/users', user.list);
+// Setup API
+baucis.model('entry', require('./models/entry').schema);
+baucis.rest('entry');
+app.use('/api', baucis());
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
