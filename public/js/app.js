@@ -38,8 +38,27 @@ app.factory('Me', function($resource, $rootScope) {
   return Me
 })
 
-app.controller('EntriesController', function($scope, Entry, $rootScope) {
-  $rootScope.entries = Entry.query(function(){})
+app.controller('EntriesController', function($scope, Entry, $rootScope, $location) {
+
+  $canMakeNew = false
+
+  $rootScope.entries = Entry.query(function(results){
+    var startDay = moment().startOf('day').toDate()
+    $scope.canMakeNew = true
+    for (var i = 0; i < results.length; ++i) {
+      if (new Date(results[i].timestamp) > startDay) {
+        $scope.canMakeNew = false
+        break
+      }
+    }
+  })
+
+  $scope.newEntry = function() {
+    var newEntry = new Entry()
+    newEntry.$save(function(entry, header) {
+      $location.url('/entry/'+entry._id)
+    })
+  }
 })
 
 app.controller('EntryController', function($scope, Entry, $rootScope, $routeParams) {
@@ -57,7 +76,6 @@ app.controller('MeController', function(Me, $scope, $rootScope) {
   $scope.mstep = 15;
 
   $scope.save = function() {
-    console.log($rootScope.me)
     $rootScope.me.$update()
   }
 })

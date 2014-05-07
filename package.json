@@ -19,8 +19,8 @@
     "passport-google": "*",
     "body-parser": "*",
     "winston": "*",
-
-    "connect-mongo": "*"
+    "connect-mongo": "*",
+    "moment": "*"
   },
   "author": "sclarsen@mtu.edu"
 }

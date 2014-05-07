@@ -4,6 +4,8 @@ var fs = require('fs');
 var async = require('async')
 var Entry = require('../models/entry').model
 var CronJob = require('cron').CronJob;
+var moment = require('moment')
+var User = require('../models/user')
 
 exports.checkSnaps = checkSnaps = function() {
   console.log("Checking for snaps...")
@@ -31,9 +33,23 @@ exports.checkSnaps = checkSnaps = function() {
             blob.resume();
           });
 
-          Entry.update({}, {$push: {images: public_filename}}).exec(function(err, count) {
-            console.log(err, count)
+          async.auto({
+            user: function(next) {
+              User.findOne({snapchat: snap.sn}).exec(next)
+            },
+
+            entry: ["user", function(next, results) {
+              user = results.user
+              startDay = moment().startOf('day').toDate()
+              Entry.findOneAndUpdate({user: user.id, timestamp: {$gt: startDay}}, {$push: {images: public_filename}}, {upsert: true}).exec(next)
+            }]
+          }, function(err, results) {
+            console.log("b", err, results)
           })
+
+          //Entry.update({}, {$push: {images: public_filename}}).exec(function(err, count) {
+          //  console.log(err, count)
+          //})
         }
       }, function(err, results) {
         next(err, results) 
@@ -47,6 +63,8 @@ exports.checkSnaps = checkSnaps = function() {
     console.log("Done with snapchat", err)
   })
 }
+
+checkSnaps()
 
 job = new CronJob({
   cronTime: "00 */1 * * * *",

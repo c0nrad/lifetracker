@@ -9,6 +9,7 @@ var morgan       = require('morgan')
 var http = require('http');
 var path = require('path');
 var baucis = require('baucis');
+var secrets = require('./secrets')
 var app = express();
 
 var mongoose = require('mongoose')
@@ -16,10 +17,7 @@ mongoose.connect('mongodb://localhost/lifetracker')
 var session    = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-
 var passport = require('passport')
-
-var secrets = require('./secrets')
 
 // all environments
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,15 +37,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req,res,next) {
-  //console.log("user: ", req.user.name);
-  next()
-})
-
 // Setup API
 baucis.model('entry', require('./models/entry').schema);
-baucis.rest('entry');
+entryController = baucis.rest('entry');
 app.use('/api', baucis());
+
+entryController.query(function (request, response, next) {
+  request.baucis.query.where('user', request.user.id);
+  next();
+});
 
 // Setup login
 var UserRoutes = require('./routes/user');
@@ -58,4 +56,5 @@ http.createServer(app).listen(app.get('port'), function(){
 });
 
 // Init controllers
-snapchat = require('./controllers/snapchat')
+require('./controllers/snapchat')
+require('./controllers/entry')

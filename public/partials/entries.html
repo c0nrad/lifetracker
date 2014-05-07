@@ -1,5 +1,7 @@
 <h1> Entries.html </h1>
 
+<button class="btn btn-primary" ng-click="newEntry()" ng-show="canMakeNew"> Start Today's Entry! </button>
+
 <div ng-repeat="entry in entries">
   <a href="/#/entry/{{entry._id}}"> {{entry.timestamp | date:'MMM dd, yyyy'}} </a>
   <div style="padding-left: 10px"> {{entry.journal}} </div>
