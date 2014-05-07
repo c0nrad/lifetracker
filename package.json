@@ -20,7 +20,8 @@
     "body-parser": "*",
     "winston": "*",
     "connect-mongo": "*",
-    "moment": "*"
+    "moment": "*",
+    "nodemailer": "*"
   },
   "author": "sclarsen@mtu.edu"
 }

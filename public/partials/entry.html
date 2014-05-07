@@ -43,8 +43,8 @@
     <label for="journal">Mood Of Day</label>
       <input type="number" class="form-control" ng-model="entry.moodOfDay" ng-blur="save()">
   </div>
-  <div ng-repeat="imageSrc in entry.images"> 
-    <img ng-src="{{imageSrc}}" width="250px" height="400px"> </img>
-  </div>
+  <span ng-repeat="imageSrc in entry.images" style="block: inline-block"> 
+    <img ng-src="{{imageSrc}}" width="270" height="480"> </img>
+  </span>
 </form>
 

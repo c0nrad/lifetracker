@@ -3,7 +3,7 @@ var Schema = mongoose.Schema
 var moment = require('moment')
 
 var EntrySchema = new Schema({
-  timestamp: {type: Date, default: function() { return moment().startOf('day').toDate() }},
+  timestamp: {type: Date, default: function() { return moment().startOf('day').toDate() }, required: true},
   
   grateful1: {type: String, default: ""},
   grateful2: {type: String, default: ""},

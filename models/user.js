@@ -1,4 +1,5 @@
 var mongoose = require('mongoose')
+var moment = require('moment')
 var Schema = mongoose.Schema
 
 var UserSchema = new Schema({
@@ -10,9 +11,10 @@ var UserSchema = new Schema({
   snapchat: String,
 
   emailNotification: {type: Boolean, default: true},
-  emailTime: {type: Date, default: new Date(2014, 0, 1, 20, 0, 0, 0)},
+  emailTime: {type: Date, default: moment().year(0).month(0).day(0).hour(20).toDate()},
+  emailLastNotify: {type: Date, default: new Date(0) },
   smsNotification: Boolean,
-  smsTime: {type: Date, default: new Date(2014, 0, 1, 20, 0, 0, 0)},
+  smsTime: {type: Date, default: moment().year(0).month(0).day(0).hour(20).toDate()},
   phone: String
 })
 

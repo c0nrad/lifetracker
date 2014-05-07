@@ -40,16 +40,25 @@ exports.checkSnaps = checkSnaps = function() {
 
             entry: ["user", function(next, results) {
               user = results.user
+
+              if (user == null)
+                return next("Snapchat doesn't belong to any users.")
+
               startDay = moment().startOf('day').toDate()
-              Entry.findOneAndUpdate({user: user.id, timestamp: {$gt: startDay}}, {$push: {images: public_filename}}, {upsert: true}).exec(next)
+              Entry.findOne({user: user.id, timestamp: {$gte: startDay}}).exec(next)
+            }],
+
+            entryUpdate: ["entry", function(next, results) {
+              if (results.entry != null) {
+                Entry.findOneAndUpdate({_id: results.entry.id}, {$push: {images: public_filename}}).exec(next)
+              } else {
+                e = new Entry({images: [public_filename], user: user.id})
+                e.save(next)
+              }
             }]
           }, function(err, results) {
             console.log("b", err, results)
           })
-
-          //Entry.update({}, {$push: {images: public_filename}}).exec(function(err, count) {
-          //  console.log(err, count)
-          //})
         }
       }, function(err, results) {
         next(err, results) 

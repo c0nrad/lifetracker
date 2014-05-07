@@ -43,6 +43,8 @@ entryController = baucis.rest('entry');
 app.use('/api', baucis());
 
 entryController.query(function (request, response, next) {
+  if (!request.isAuthenticated())
+    return response.send(401);
   request.baucis.query.where('user', request.user.id);
   next();
 });
@@ -58,3 +60,4 @@ http.createServer(app).listen(app.get('port'), function(){
 // Init controllers
 require('./controllers/snapchat')
 require('./controllers/entry')
+require('./controllers/notifications')
