@@ -21,7 +21,8 @@
     "winston": "*",
     "connect-mongo": "*",
     "moment": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "twilio": "*"
   },
   "author": "sclarsen@mtu.edu"
 }

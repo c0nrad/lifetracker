@@ -11,10 +11,11 @@ var UserSchema = new Schema({
   snapchat: String,
 
   emailNotification: {type: Boolean, default: true},
-  emailTime: {type: Date, default: moment().year(0).month(0).day(0).hour(20).toDate()},
-  emailLastNotify: {type: Date, default: new Date(0) },
-  smsNotification: Boolean,
-  smsTime: {type: Date, default: moment().year(0).month(0).day(0).hour(20).toDate()},
+  emailTime: {type: String, default: "20:00", required: true},
+
+  smsNotification: {type: Boolean, default: true},
+  smsTime: {type: String, default: "20:00", required: true},
+
   phone: String
 })
 
