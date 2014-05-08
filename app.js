@@ -22,7 +22,7 @@ var passport = require('passport')
 // all environments
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', secrets.port);
 app.use(morgan('dev'))
 app.use(bodyParser());
 app.use(cookieParser()) // required before session.
