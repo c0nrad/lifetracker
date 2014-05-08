@@ -80,7 +80,6 @@ app.controller('EntriesController', function($scope, Entry, $rootScope, $locatio
   $scope.canMakeNew = false
 
   $rootScope.entries = Entry.query(function(results){
-    console.log("HERE", results)
     var startDay = moment().startOf('day').toDate()
     $scope.canMakeNew = true
     for (var i = 0; i < results.length; ++i) {
@@ -99,7 +98,6 @@ app.controller('EntriesController', function($scope, Entry, $rootScope, $locatio
   $scope.newEntry = function() {
     var newEntry = new Entry({user: $rootScope.me._id })
     newEntry.$save(function(entry, header) {
-      console.log("LOLOL")
       $location.url('/entry/'+entry._id)
     })
   }
@@ -107,12 +105,25 @@ app.controller('EntriesController', function($scope, Entry, $rootScope, $locatio
 
 app.controller('EntryController', function($scope, Entry, $rootScope, $routeParams) {
   Entry.get({_id:$routeParams._id}, function(u, getResponseHeaders){
-    $scope.entry = u       
+    $scope.entry = u  
+    $scope.updateProgress()     
   });
 
+  $scope.progress = 0
 
+  $scope.updateProgress = function() {
+    $scope.progress = (+ ($scope.entry.grateful1.length != 0)) +
+                      (+ ($scope.entry.grateful2.length != 0)) +
+                      (+ ($scope.entry.grateful3.length != 0)) +
+                      (+ ($scope.entry.journal.length != 0)) +
+                      (+$scope.entry.isExercise) + 
+                      (+$scope.entry.isMeditate) +
+                      (+$scope.entry.isRAK);
+  }
+  
   $scope.save = function() {
     $scope.entry.$update()
+    $scope.updateProgress()
   }
 })
 
