@@ -101,6 +101,45 @@ app.controller('EntriesController', function($scope, Entry, $rootScope, $locatio
       $location.url('/entry/'+entry._id)
     })
   }
+
+
+  $scope.$watch('dt', function(newDate, oldDate) {
+    oldDate = moment(oldDate).startOf('day').toDate()
+    newDate = moment(newDate).startOf('day').toDate()
+    if (oldDate.getTime() != newDate.getTime() && $rootScope.entries != null) {
+      var redirectEntry = null
+      for (var i = 0; i < $rootScope.entries.length; ++i) {
+        var entry = $rootScope.entries[i]
+        if (moment(entry.timestamp).startOf('day').toDate().getTime() == newDate.getTime()) {
+          redirectEntry = entry
+        }
+      }
+
+      if (redirectEntry == null) {
+        var newEntry = new Entry({user: $rootScope.me._id , timestamp: newDate})
+        newEntry.$save(function(entry, header) {
+          $location.url('/entry/'+entry._id)
+        })
+      } else {
+        $location.url('/entry/'+redirectEntry._id)
+      }
+    }
+  })
+
+  $scope.dt = new Date();
+  $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.opened = true;
+  };
+
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  };
+
+  $scope.format = "shortDate"
+  $scope.today = new Date()
 })
 
 app.controller('EntryController', function($scope, Entry, $rootScope, $routeParams) {

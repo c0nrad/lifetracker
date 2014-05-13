@@ -9,7 +9,7 @@ var EntrySchema = new Schema({
   grateful2: {type: String, default: ""},
   grateful3: {type: String, default: ""},
 
-  journal: String,
+  journal: {type: String, default: ""},
 
   images: [String],
 

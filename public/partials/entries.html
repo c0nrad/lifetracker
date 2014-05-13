@@ -1,7 +1,21 @@
 <h1> Entries.html </h1>
 
-<button class="btn btn-primary" ng-click="newEntry()" ng-show="canMakeNew"> Start Today's Entry! </button>
+<h4>Goto Entry</h4>
+<div class="row">
+    <div class="col-md-6">
+        <p class="input-group">
+          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" max-date="today" datepicker-options="dateOptions" ng-required="true" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+    </div>
+</div>
 
+<hr>
+
+<button class="btn btn-primary" ng-click="newEntry()" ng-show="canMakeNew"> Start Today's Entry! </button>
+    
 <div ng-repeat="entry in entries">
   <a href="/#/entry/{{entry._id}}"> {{entry.timestamp | date:'MMM dd, yyyy'}} </a>
   <div style="padding-left: 10px"> {{entry.journal}} </div>
